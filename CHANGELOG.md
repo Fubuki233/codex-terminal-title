@@ -1,5 +1,10 @@
 # Codex Terminal Title changelog
 
+## 0.2.3
+
+- Keep reasserting the managed title while Codex is running.
+- Prevent the Codex TUI or shell from permanently restoring a directory-based title before task metadata is available.
+
 ## 0.2.2
 
 - Restore executable permission on the Linux and macOS proxy after VSIX installation.

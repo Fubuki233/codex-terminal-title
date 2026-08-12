@@ -2,7 +2,7 @@
   "name": "codex-terminal-title",
   "displayName": "Codex Terminal Title",
   "description": "Automatically name Codex terminal tabs from your prompt, then replace them with the generated task title.",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "publisher": "fubuki233",
   "icon": "assets/icon.png",
   "repository": {

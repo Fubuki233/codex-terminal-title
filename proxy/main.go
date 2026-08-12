@@ -102,9 +102,7 @@ func main() {
 	}
 
 	stop := make(chan struct{})
-	if client != nil {
-		go watchTitle(client, cfg, cwd, baseline, startedAt, stop)
-	}
+	go watchTitle(client, cfg, cwd, baseline, startedAt, stop)
 
 	err = command.Wait()
 	close(stop)
@@ -185,28 +183,32 @@ func watchTitle(
 	ticker := time.NewTicker(cfg.pollInterval)
 	defer ticker.Stop()
 	threadID := ""
+	currentTitle := normalize(cfg.titlePrefix + "Codex")
 
 	for {
 		select {
 		case <-stop:
 			return
 		case <-ticker.C:
-			threads, err := client.listThreads(cwd)
-			if err != nil {
-				continue
-			}
-			if threadID == "" {
-				threadID = selectNewThread(threads, baseline, startedAt)
-			}
-			if threadID == "" {
-				continue
-			}
-			for _, item := range threads {
-				if item.ID == threadID {
-					emitTitle(displayTitle(cfg, item))
-					break
+			if client != nil {
+				threads, err := client.listThreads(cwd)
+				if err != nil {
+					emitTitle(currentTitle)
+					continue
+				}
+				if threadID == "" {
+					threadID = selectNewThread(threads, baseline, startedAt)
+				}
+				if threadID != "" {
+					for _, item := range threads {
+						if item.ID == threadID {
+							currentTitle = displayTitle(cfg, item)
+							break
+						}
+					}
 				}
 			}
+			emitTitle(currentTitle)
 		}
 	}
 }
@@ -275,7 +277,7 @@ func startAppServer(realCodex string, environment []string) (*appServerClient, e
 		"clientInfo": map[string]string{
 			"name":    "codex_terminal_title",
 			"title":   "Codex Terminal Title",
-			"version": "0.2.2",
+			"version": "0.2.3",
 		},
 	}, &ignored); err != nil {
 		client.close()
