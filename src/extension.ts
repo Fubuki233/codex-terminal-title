@@ -31,6 +31,17 @@ export function activate(context: vscode.ExtensionContext): void {
       );
       return;
     }
+    if (process.platform !== "win32") {
+      try {
+        fs.chmodSync(proxyExecutable, 0o755);
+      } catch (error) {
+        output.error(`Unable to make the platform proxy executable: ${String(error)}`);
+        void vscode.window.showErrorMessage(
+          "Codex Terminal Title could not make its proxy executable. Check the extension directory permissions."
+        );
+        return;
+      }
+    }
 
     const configuredCodex = config.get<string>("codexPath", "codex");
     const realCodex = resolveExecutable(configuredCodex, process.env);

@@ -1,5 +1,10 @@
 # Codex Terminal Title changelog
 
+## 0.2.2
+
+- Restore executable permission on the Linux and macOS proxy after VSIX installation.
+- Show a clear error if the extension directory does not permit the proxy to be activated.
+
 ## 0.2.1
 
 - Keep automatic detection active when NVM or a Bash profile prepends another directory to PATH.

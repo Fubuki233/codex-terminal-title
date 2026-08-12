@@ -275,7 +275,7 @@ func startAppServer(realCodex string, environment []string) (*appServerClient, e
 		"clientInfo": map[string]string{
 			"name":    "codex_terminal_title",
 			"title":   "Codex Terminal Title",
-			"version": "0.2.1",
+			"version": "0.2.2",
 		},
 	}, &ignored); err != nil {
 		client.close()
