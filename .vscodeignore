@@ -1,0 +1,9 @@
+.github/**
+.vscode/**
+src/**
+*.test.ts
+tsconfig.json
+esbuild.mjs
+node_modules/.cache/**
+*.vsix
+assets/icon-source.png

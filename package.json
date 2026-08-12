@@ -1,0 +1,113 @@
+{
+  "name": "codex-terminal-title",
+  "displayName": "Codex Terminal Title",
+  "description": "Automatically name Codex terminal tabs from your prompt, then replace them with the generated task title.",
+  "version": "0.1.0",
+  "publisher": "fubuki233",
+  "icon": "assets/icon.png",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "codex",
+    "terminal",
+    "title",
+    "cli",
+    "openai"
+  ],
+  "galleryBanner": {
+    "color": "#071426",
+    "theme": "dark"
+  },
+  "extensionKind": [
+    "workspace"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onCommand:codexTaskTerminal.new",
+    "onTerminalProfile:codexTaskTerminal.profile"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "codexTaskTerminal.new",
+        "title": "Codex Terminal Title: New Codex Terminal",
+        "icon": "$(terminal)"
+      }
+    ],
+    "terminal": {
+      "profiles": [
+        {
+          "id": "codexTaskTerminal.profile",
+          "title": "Codex Terminal Title",
+          "icon": "terminal"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Codex Terminal Title",
+      "properties": {
+        "codexTaskTerminal.codexPath": {
+          "type": "string",
+          "default": "codex",
+          "description": "Codex CLI executable name or absolute path in the environment where the extension runs."
+        },
+        "codexTaskTerminal.codexArgs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Additional arguments passed to Codex CLI."
+        },
+        "codexTaskTerminal.titlePrefix": {
+          "type": "string",
+          "default": "Codex: ",
+          "description": "Prefix shown before the prompt preview or generated task title."
+        },
+        "codexTaskTerminal.promptMaxWidth": {
+          "type": "integer",
+          "default": 32,
+          "minimum": 8,
+          "maximum": 120,
+          "description": "Maximum terminal display width for the prompt preview before truncation."
+        },
+        "codexTaskTerminal.ellipsis": {
+          "type": "string",
+          "default": "…",
+          "description": "Text appended to a truncated prompt preview."
+        },
+        "codexTaskTerminal.pollIntervalMs": {
+          "type": "integer",
+          "default": 1000,
+          "minimum": 500,
+          "maximum": 10000,
+          "description": "How often the extension checks Codex task metadata for title changes."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "check": "tsc --noEmit",
+    "test": "tsx --test src/**/*.test.ts",
+    "package": "npm run check && npm test && npm run build && vsce package",
+    "package:target": "npm run check && npm test && npm run build && vsce package --target"
+  },
+  "dependencies": {
+    "node-pty": "1.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/vscode": "^1.96.0",
+    "@vscode/vsce": "^3.9.0",
+    "esbuild": "^0.28.0",
+    "tsx": "^4.20.0",
+    "typescript": "^7.0.0"
+  }
+}
