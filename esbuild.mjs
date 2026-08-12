@@ -8,7 +8,7 @@ const context = await esbuild.context({
   format: "cjs",
   target: "node20",
   outfile: "dist/extension.js",
-  external: ["vscode", "node-pty"],
+  external: ["vscode"],
   sourcemap: true,
   logLevel: "info"
 });

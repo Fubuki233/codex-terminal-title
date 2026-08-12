@@ -1,11 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 
-export interface ProcessCommand {
-  file: string;
-  args: string[];
-}
-
 export function resolveExecutable(command: string, env: NodeJS.ProcessEnv): string {
   if (path.isAbsolute(command) || command.includes("/") || command.includes("\\")) {
     return command;
@@ -29,26 +24,4 @@ export function resolveExecutable(command: string, env: NodeJS.ProcessEnv): stri
     }
   }
   return command;
-}
-
-export function commandForPlatform(
-  executable: string,
-  args: readonly string[],
-  env: NodeJS.ProcessEnv
-): ProcessCommand {
-  const resolved = resolveExecutable(executable, env);
-  if (process.platform !== "win32" || !/\.(cmd|bat)$/i.test(resolved)) {
-    return { file: resolved, args: [...args] };
-  }
-
-  const shell = env.ComSpec ?? env.COMSPEC ?? "cmd.exe";
-  const commandLine = [resolved, ...args].map(quoteCmdArgument).join(" ");
-  return { file: shell, args: ["/d", "/s", "/c", commandLine] };
-}
-
-function quoteCmdArgument(value: string): string {
-  if (!/[\s&()\[\]{}^=;!'+,`~]/.test(value)) {
-    return value;
-  }
-  return `"${value.replace(/"/g, '""')}"`;
 }

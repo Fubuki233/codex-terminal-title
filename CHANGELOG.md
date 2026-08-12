@@ -1,5 +1,12 @@
 # Codex Terminal Title changelog
 
+## 0.2.0
+
+- Automatically detect Codex CLI in every newly created integrated terminal.
+- Route ordinary `codex` commands through a lightweight platform proxy.
+- Remove the requirement to launch a special extension-controlled terminal.
+- Preserve the real Codex CLI input, output, arguments and exit code.
+
 ## 0.1.1
 
 - Update both the extension terminal name and its OSC sequence title.

@@ -2,7 +2,7 @@
   "name": "codex-terminal-title",
   "displayName": "Codex Terminal Title",
   "description": "Automatically name Codex terminal tabs from your prompt, then replace them with the generated task title.",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "publisher": "fubuki233",
   "icon": "assets/icon.png",
   "repository": {
@@ -36,8 +36,8 @@
   ],
   "main": "./dist/extension.js",
   "activationEvents": [
-    "onCommand:codexTaskTerminal.new",
-    "onTerminalProfile:codexTaskTerminal.profile"
+    "onStartupFinished",
+    "onCommand:codexTaskTerminal.new"
   ],
   "contributes": {
     "commands": [
@@ -47,18 +47,14 @@
         "icon": "$(terminal)"
       }
     ],
-    "terminal": {
-      "profiles": [
-        {
-          "id": "codexTaskTerminal.profile",
-          "title": "Codex Terminal Title",
-          "icon": "terminal"
-        }
-      ]
-    },
     "configuration": {
       "title": "Codex Terminal Title",
       "properties": {
+        "codexTaskTerminal.autoDetect": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically intercept Codex CLI launches in every new integrated terminal."
+        },
         "codexTaskTerminal.codexPath": {
           "type": "string",
           "default": "codex",
@@ -100,15 +96,15 @@
     }
   },
   "scripts": {
-    "build": "node esbuild.mjs",
+    "build": "npm run build:extension && npm run build:proxy",
+    "build:extension": "node esbuild.mjs",
+    "build:proxy": "node scripts/build-proxy.mjs",
     "watch": "node esbuild.mjs --watch",
     "check": "tsc --noEmit",
     "test": "tsx --test src/**/*.test.ts",
-    "package": "npm run check && npm test && npm run build && vsce package",
-    "package:target": "npm run check && npm test && npm run build && vsce package --target"
-  },
-  "dependencies": {
-    "node-pty": "1.1.0"
+    "test:proxy": "go test ./proxy",
+    "package": "npm run check && npm test && npm run test:proxy && npm run build && vsce package",
+    "package:target": "npm run check && npm test && npm run test:proxy && npm run build && vsce package --target"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
