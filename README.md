@@ -73,6 +73,6 @@ If an unrelated Codex CLI is launched outside the extension in the exact same fo
 
 ## Feedback
 
-Found a problem or have an idea? Open an issue in the project repository after it is linked from the Marketplace page.
+Found a problem or have an idea? [Open an issue](https://github.com/Fubuki233/codex-terminal-title/issues).
 
 Codex is a product of OpenAI. This community extension is not affiliated with or endorsed by OpenAI.
