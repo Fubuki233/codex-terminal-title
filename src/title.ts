@@ -60,6 +60,11 @@ export function titleForThread(
   return truncateDisplayWidth(preview ?? "", maxPromptWidth, ellipsis) || "Codex";
 }
 
+export function terminalTitleSequence(value: string): string {
+  const safeTitle = normalizeTitle(value) || "Codex";
+  return `\u001b]2;${safeTitle}\u0007`;
+}
+
 function graphemes(value: string): string[] {
   if (typeof Intl.Segmenter === "function") {
     const segmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" });

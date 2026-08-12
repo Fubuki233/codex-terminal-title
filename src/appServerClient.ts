@@ -127,7 +127,7 @@ export class AppServerClient {
       clientInfo: {
         name: "codex_task_terminal",
         title: "Codex Terminal Title",
-        version: "0.1.0"
+        version: "0.1.1"
       }
     });
     this.notify("initialized", {});

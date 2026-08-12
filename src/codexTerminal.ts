@@ -4,7 +4,7 @@ import { AppServerClient, CodexThread } from "./appServerClient.js";
 import { OscTitleFilter } from "./oscTitleFilter.js";
 import { commandForPlatform } from "./processCommand.js";
 import { ThreadMatcher } from "./threadMatcher.js";
-import { titleForThread } from "./title.js";
+import { normalizeTitle, terminalTitleSequence, titleForThread } from "./title.js";
 
 interface TerminalOptions {
   cwd: string;
@@ -138,7 +138,9 @@ export class CodexPseudoterminal implements vscode.Pseudoterminal {
   }
 
   private setTitle(title: string): void {
-    this.nameEmitter.fire(`${this.options.prefix}${title}`);
+    const fullTitle = normalizeTitle(`${this.options.prefix}${title}`) || "Codex";
+    this.nameEmitter.fire(fullTitle);
+    this.writeEmitter.fire(terminalTitleSequence(fullTitle));
   }
 
   private dispose(killProcess = true): void {

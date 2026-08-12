@@ -1,6 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { normalizeTitle, titleForThread, truncateDisplayWidth } from "./title.js";
+import {
+  normalizeTitle,
+  terminalTitleSequence,
+  titleForThread,
+  truncateDisplayWidth
+} from "./title.js";
 
 test("normalizes multiline prompts and control characters", () => {
   assert.equal(normalizeTitle("  fix\n\tthe\u0000 bug  "), "fix the bug");
@@ -24,4 +29,11 @@ test("keeps emoji graphemes intact", () => {
 
 test("falls back to Codex before the first prompt", () => {
   assert.equal(titleForThread(undefined, undefined, 32, "…"), "Codex");
+});
+
+test("creates a safe OSC title sequence for sequence-based tab templates", () => {
+  assert.equal(
+    terminalTitleSequence("Codex: fix\u0007\nlogin"),
+    "\u001b]2;Codex: fix login\u0007"
+  );
 });

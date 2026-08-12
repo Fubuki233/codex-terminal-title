@@ -33,6 +33,8 @@ You can also select **Codex Terminal Title** from the terminal profile menu.
 
 The extension manages only the terminals it creates. Your existing terminals and shell configuration remain unchanged.
 
+Both VS Code's default terminal title template and custom `${sequence}` templates are supported.
+
 ## Works where your Codex CLI works
 
 - Windows
