@@ -1,5 +1,10 @@
 # Codex Terminal Title changelog
 
+## 0.2.1
+
+- Keep automatic detection active when NVM or a Bash profile prepends another directory to PATH.
+- Inject a temporary Bash `codex` function without modifying shell configuration files.
+
 ## 0.2.0
 
 - Automatically detect Codex CLI in every newly created integrated terminal.

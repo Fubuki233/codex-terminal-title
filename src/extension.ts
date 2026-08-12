@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import * as vscode from "vscode";
 import { resolveExecutable } from "./processCommand.js";
+import { quoteForBash } from "./shell.js";
 
 const ENV_PREFIX = "CODEX_TERMINAL_TITLE_";
 
@@ -36,6 +37,12 @@ export function activate(context: vscode.ExtensionContext): void {
     const originalPath = process.env.PATH ?? process.env.Path ?? "";
 
     collection.prepend("PATH", `${proxyDirectory}${path.delimiter}`);
+    if (process.platform !== "win32") {
+      collection.replace(
+        "BASH_FUNC_codex%%",
+        `() { ${quoteForBash(proxyExecutable)} "$@"; }`
+      );
+    }
     collection.replace(`${ENV_PREFIX}REAL_CODEX`, realCodex);
     collection.replace(`${ENV_PREFIX}ORIGINAL_PATH`, originalPath);
     collection.replace(

@@ -10,6 +10,7 @@ While Codex prepares its generated task title, the tab shows a shortened version
 
 - **Works in normal terminals.** Run `codex` from Bash, Zsh, Fish, PowerShell, CMD or Git Bash.
 - **Detects Codex automatically.** New integrated terminals are prepared when the extension activates; other commands are unaffected.
+- **Works with NVM-managed Codex.** Bash receives a temporary `codex` function so NVM can update PATH without bypassing title detection.
 - **Shows your task immediately.** Your first prompt becomes the temporary terminal name.
 - **Switches to the generated title automatically.** The concise Codex task title replaces the prompt preview when available.
 - **Follows renamed tasks.** Rename the current Codex task and the terminal title follows.
