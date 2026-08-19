@@ -15,7 +15,7 @@ While Codex prepares its generated task title, the tab shows a shortened version
 - **Switches to the generated title automatically.** The concise Codex task title replaces the prompt preview when available.
 - **Follows renamed tasks.** Rename the current Codex task and the terminal title follows.
 - **Keeps long prompts readable.** Long prompts are shortened without splitting Chinese characters or Emoji.
-- **Prevents title overwrite.** The task title is periodically restored if a shell or CLI process tries to replace it.
+- **Prevents title overwrite.** In managed sessions, Codex's built-in animated terminal title is disabled so the loading spinner cannot replace the task name.
 - **Keeps multiple Codex tasks separate.** Every Codex process tracks the task created in its own working directory.
 
 ## How the title changes

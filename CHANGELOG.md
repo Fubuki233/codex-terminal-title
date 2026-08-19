@@ -1,5 +1,10 @@
 # Codex Terminal Title changelog
 
+## 0.2.4
+
+- Disable Codex CLI's built-in animated terminal title for managed sessions.
+- Prevent the loading spinner from competing with the task title shown by the extension.
+
 ## 0.2.3
 
 - Keep reasserting the managed title while Codex is running.

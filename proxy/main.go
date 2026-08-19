@@ -23,6 +23,8 @@ import (
 
 const envPrefix = "CODEX_TERMINAL_TITLE_"
 
+const managedTerminalTitleConfig = "tui.terminal_title=[]"
+
 type config struct {
 	realCodex      string
 	originalPath   string
@@ -85,7 +87,7 @@ func main() {
 		}
 	}
 
-	args := append(append([]string{}, cfg.extraArgs...), os.Args[1:]...)
+	args := managedCodexArguments(cfg.extraArgs, os.Args[1:])
 	command := commandForExecutable(realCodex, args...)
 	command.Env = childEnv
 	command.Dir = cwd
@@ -118,6 +120,14 @@ func main() {
 	}
 	fmt.Fprintf(os.Stderr, "Codex Terminal Title: Codex CLI failed: %v\n", err)
 	os.Exit(1)
+}
+
+func managedCodexArguments(extraArgs, invocationArgs []string) []string {
+	args := make([]string, 0, 2+len(extraArgs)+len(invocationArgs))
+	args = append(args, "--config", managedTerminalTitleConfig)
+	args = append(args, extraArgs...)
+	args = append(args, invocationArgs...)
+	return args
 }
 
 func loadConfig() config {
@@ -277,7 +287,7 @@ func startAppServer(realCodex string, environment []string) (*appServerClient, e
 		"clientInfo": map[string]string{
 			"name":    "codex_terminal_title",
 			"title":   "Codex Terminal Title",
-			"version": "0.2.3",
+			"version": "0.2.4",
 		},
 	}, &ignored); err != nil {
 		client.close()

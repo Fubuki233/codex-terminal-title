@@ -58,3 +58,11 @@ func TestPathWithoutProxyKeepsShellAddedPaths(t *testing.T) {
 		t.Fatalf("unexpected filtered PATH: %q", actual)
 	}
 }
+
+func TestManagedCodexArgumentsDisableBuiltInTerminalTitle(t *testing.T) {
+	actual := managedCodexArguments([]string{"--model", "gpt-test"}, []string{"resume", "thread-id"})
+	expected := []string{"--config", "tui.terminal_title=[]", "--model", "gpt-test", "resume", "thread-id"}
+	if strings.Join(actual, "\x00") != strings.Join(expected, "\x00") {
+		t.Fatalf("unexpected managed arguments: %#v", actual)
+	}
+}
